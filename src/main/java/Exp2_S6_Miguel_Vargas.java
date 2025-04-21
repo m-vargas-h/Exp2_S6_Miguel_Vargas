@@ -125,13 +125,13 @@ public class Exp2_S6_Miguel_Vargas {
                         break;
                 
                     default:
-                        System.out.println("Opcion invalida");
+                        System.out.println("Opción invalida");
                         break;
                 }
 
             } else {
 
-                System.out.println("Opcion invalida, por favor intente nuevamente");
+                System.out.println("Opción invalida, por favor intente nuevamente");
                 scanner.next();
             }
 
@@ -149,7 +149,6 @@ public class Exp2_S6_Miguel_Vargas {
             System.out.println("\nTiene compras pendientes de pago.");
             System.out.println("Se le redirigirá automáticamente al menú de pago.\n");
             
-            // Invoca directamente el método de pago
             procesarPago(scanner);
             }
         }
@@ -165,7 +164,7 @@ public class Exp2_S6_Miguel_Vargas {
             confirmaCompra = scanner.nextInt();
         } while (confirmaCompra < 1 || confirmaCompra > 4);
     
-        switch (confirmaCompra) {
+        switch (confirmaCompra) { //BREAKPOINT: agregar para verificar que las variables hayan acumulado los valores de manera correcta
             case 1:
                 generarBoleta();
                 System.out.println("Pago con tarjeta de débito. Procesando...");
@@ -229,8 +228,8 @@ public class Exp2_S6_Miguel_Vargas {
     //método para opción 4 - modificar compra
     public static void modificarCompra(Scanner scanner) {
         System.out.println("\n--- Modificar Compra ---");
-        System.out.println("1. Cambiar una entrada");
-        System.out.println("2. Eliminar una entrada");
+        System.out.println("1. Cambiar entrada");
+        System.out.println("2. Eliminar entrada");
         System.out.println("3. Agregar más entradas");
         System.out.println("4. Regresar al menú principal");
         System.out.print("Seleccione una opción: ");
@@ -264,7 +263,10 @@ public class Exp2_S6_Miguel_Vargas {
             System.out.println("No hay entradas compradas para cambiar.");
             return;
         }
-    
+
+        //plano del teatro
+        mostrarPlanoGeneral();
+
         //mostrar todas las entradas compradas
         System.out.println("\n--- Entradas Compradas ---");
         for (int i = 0; i < entradasCompradas.size(); i++) {
@@ -321,6 +323,9 @@ public class Exp2_S6_Miguel_Vargas {
             System.out.println("No hay entradas compradas para eliminar.");
             return;
         }
+
+        //plano general
+        mostrarPlanoGeneral();
     
         //mostrar todas las entradas compradas
         System.out.println("\n--- Entradas Compradas ---");
@@ -349,6 +354,9 @@ public class Exp2_S6_Miguel_Vargas {
             System.out.println("Ya ha alcanzado el límite de 5 entradas por compra.");
             return;
         }
+
+        //plano general
+        mostrarPlanoGeneral();
     
         System.out.println("¿Cuántas entradas desea agregar? (Máximo " + (5 - entradasCompradas.size()) + ")");
         int cantidad = scanner.nextInt();
@@ -381,12 +389,13 @@ public class Exp2_S6_Miguel_Vargas {
     
                     if (fila >= 0 && fila < zonaActual.length && columna >= 0 && columna < zonaActual[0].length) {
                         if (zonaActual[fila][columna] == 'O') {
-                            zonaActual[fila][columna] = 'X'; //reservar asiento
+                            zonaActual[fila][columna] = 'X'; //reservar asiento, BREAKPOINT: agregar para verificar que se asigne correctamente el asiento
     
                             //crear y añadir entrada
                             Entrada nuevaEntrada = new Entrada(zonaSeleccionada, fila, columna, precioBase, filaChar);
-                            entradasCompradas.add(nuevaEntrada);
-                            totalAcumulado += precioBase; //actualizar total acumulado
+                            entradasCompradas.add(nuevaEntrada); //BREAKPOINT: agregar para verificar que la entrada se agrega correctamente
+                            totalAcumulado += precioBase; //actualizar total acumulado, BREAKPOINT: agregar para verificar que el total se actualice 
+                            entradaAcumulada++; //BREAKPOINT: agregar para verificar que la entrada se agrega correctamente
                             compraExitosa = true;
                             System.out.println("Entrada agregada exitosamente.");
                         } else {
@@ -402,6 +411,7 @@ public class Exp2_S6_Miguel_Vargas {
         }
     }
 
+    //menu principal
     public static void menu() {
         System.out.println("\n--- Menu principal ---");
         System.out.println("1. Selección entradas entradas");
@@ -480,7 +490,7 @@ public class Exp2_S6_Miguel_Vargas {
                         continue;
                     }
         
-                    // Mostrar el plano de la zona seleccionada con filas y columnas etiquetadas
+                    //mostrar el plano de la zona seleccionada
                     mostrarPlano(zonaActual);
         
                     //solicitar la fila y columna del asiento
@@ -493,7 +503,7 @@ public class Exp2_S6_Miguel_Vargas {
         
                     if (fila >= 0 && fila < zonaActual.length && columna >= 0 && columna < zonaActual[0].length) {
                         if (zonaActual[fila][columna] == 'O') {
-                            zonaActual[fila][columna] = 'X';            //marcar asiento como ocupado
+                            zonaActual[fila][columna] = 'X';            //marcar asiento como ocupado, BREAKPOINT: agregar para verificar que se asigne correctamente el asiento
                             System.out.println("Asiento reservado exitosamente.");
         
                             //solicitar la edad para calcular descuento
@@ -517,9 +527,10 @@ public class Exp2_S6_Miguel_Vargas {
 
                                 //crear y añadir entrada a la lista
                                 Entrada nuevaEntrada = new Entrada(zonaSeleccionada, fila, columna, precioFinal, filaChar);
-                                entradasCompradas.add(nuevaEntrada);
+                                entradasCompradas.add(nuevaEntrada); //BREAKPOINT: agregar para verificar que la entrada se agrega correctamente
 
-                                totalAcumulado += precioFinal; // actualizar el total acumulado
+                                totalAcumulado += precioFinal; //actualizar el total acumulado, BREAKPOINT: agregar para verificar que el total se actualice 
+                                entradaAcumulada++; //BREAKPOINT: agregar para verificar que la entrada se agrega correctamente
                                 compraExitosa = true;
 
                             } else {
@@ -562,6 +573,22 @@ public class Exp2_S6_Miguel_Vargas {
         }
     }
 
+    //plano general del teatro
+    public static void mostrarPlanoGeneral() {
+        System.out.println("--------------");
+        System.out.println("  ESCENARIO");
+        System.out.println("--------------");
+        
+        System.out.println("\nZona VIP:");
+        mostrarPlano(zonaVip);
+    
+        System.out.println("\nZona Normal:");
+        mostrarPlano(zonaNormal);
+    
+        System.out.println("\nZona Palco:");
+        mostrarPlano(zonaPalco);
+    }
+
     //método para la opción 3 - promociones
     static void promocionesDisponibles() {
         System.out.println("\n--- Promociones Disponibles ---");
@@ -570,7 +597,7 @@ public class Exp2_S6_Miguel_Vargas {
     }
 
     //método para generar boleta de compra
-    public static void generarBoleta() {
+    public static void generarBoleta() { //BREAKPOINT: agregar un punto para verificar que las entradas y sus valores se cargaron correctamente
        
         System.out.println("\n--------------- BOLETA ---------------");
         System.out.println("             TEATRO MORO");
